@@ -11,6 +11,11 @@
 <body>
     <div id="app">
         <h1 v-text="sitename"></h1>
+        <button @click="showCheckout">
+            {{cartItemCount}}
+            Checkout
+        </button>
+        <div v-if="showSubject">
         <br>
         <img width="450" height="350" v-bind:src="subject.image">
         <h2 v-text="subject.title"></h2>
@@ -18,12 +23,17 @@
         <p id="test">Price: ${{subject.price}}</p>
         <button v-on:click="addItem" v-if="canAddToCart">Add To Cart</button>
         <button disabled="disabled" v-else>Add To Cart</button>
+        </div>
+        <div v-else>
+            <h2>Checkout</h2>
+        </div>
     </div>
 <script>
     let webstore = new Vue({
         el: '#app',
         data: {
             sitename: 'Lessons & Activities',
+            showSubject: true,
             subject: {
                 id: 123,
                 title: "Mathematics",
@@ -37,9 +47,15 @@
         methods:{
             addItem: function(){
                 this.cart.push(this.subject.id);
+            },
+            showCheckout(){
+                    this.showSubject = this.showSubject ? false : true
             }
         },
         computed: {
+            cartItemCount: function(){
+                    return this.cart.length || ''
+            },
                 canAddToCart: function(){
                     return this.subject.availableInventory > this.cartItemCount;
             }
