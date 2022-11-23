@@ -67,6 +67,7 @@
             <p>Send as Gift: {{order.gift}}</p>
             <p>Zip: {{order.zip}}</p>
             <p>State: {{order.state}}</p>
+            <button @click="submitForm">Place Order</button>
         </div>
     </div>
 <script>
@@ -108,6 +109,9 @@
             },
             showCheckout(){
                     this.showSubject = this.showSubject ? false : true
+            },
+            submitForm(){
+                    alert("Order Submitted!")
             }
         },
         computed: {
