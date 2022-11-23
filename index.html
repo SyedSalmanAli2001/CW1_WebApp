@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,30 @@
     <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
 </head>
 <body>
-
+    <div id="app">
+        <h1 v-text="sitename"></h1>
+        <br>
+        <img width="450" height="350" v-bind:src="subject.image">
+        <h2 v-text="subject.title"></h2>
+        <p v-text="subject.description"></p>
+        <p id="test">Price: ${{subject.price}}</p>
+    </div>
 </body>
+<script>
+    let webstore = new Vue({
+        el: '#app',
+        data: {
+            sitename: 'Lessons & Activities',
+            subject: {
+                id: 123,
+                title: "Mathematics",
+                price: '22',
+                description: "Get Mathematics classes from the best professor in Sharjah",
+                image: 'mathematics.jpeg',
+                availableInventory: 5
+            },
+            
+        },
+    });
+</script>
 </html>
