@@ -15,8 +15,10 @@
             {{cartItemCount}}
             Checkout
         </button>
+        <button @click="sortAscending">Price: Low to High</button>
+        <button @click="sortDescending">Price: High to Low</button>
             <div v-if="showSubject">
-                <div v-for="subject in sortedSubjects">
+                <div v-for="subject in subjects">
             <br>
             <img width="450" height="350" v-bind:src="subject.image">
             <h2 v-text="subject.title"></h2>
@@ -130,20 +132,19 @@
                 },
                 itemLeft(subject){
                     return subject.spaces - this.cartCount(subject.id)
-                }
+                },
+                sortAscending(){
+                this.subjects.sort((a, b) => a.price > b.price ? 1 : -1);
+                },
+                sortDescending(){
+                this.subjects.sort((a, b) => a.price < b.price ? 1 : -1);
+            }
             },
             computed: {
                 cartItemCount: function(){
                     return this.cart.length || ''
             },
-                sortedSubjects(){
-                function compare(a, b){
-                    if(a.price > b.price) return 1;
-                    if(a.price < b.price) return -1;
-                    return 0;
-                }
-                return this.subjects.sort(compare);
-            }
+        
         }
         });
     </script>
