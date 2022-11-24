@@ -16,15 +16,22 @@
             Checkout
         </button>
             <div v-if="showSubject">
-                <div v-for="subject in subjects">
+                <div v-for="subject in sortedSubjects">
             <br>
             <img width="450" height="350" v-bind:src="subject.image">
             <h2 v-text="subject.title"></h2>
             <p>Location: {{subject.location}}</p>
             <p>Price: ${{subject.price}}</p>
-            <button v-on:click="addItem" :disabled="!canAddToCart">Add to Cart</button>
-            </div>
+            <button v-on:click="addItem(subject)" :disabled="!canAddToCart(subject)">Add to Cart</button>
+            <span v-if="itemLeft(subject) === 0">
+                Out of Stock
+            </span>
+            <span v-else-if="itemLeft(subject) < 3">
+                Only {{itemLeft(subject)}} left!
+            </span>
+            <span v-else>Buy Now!</span>
                 </div>
+            </div>
             <div v-else>
                 <h2>Checkout</h2>
                 <p>
@@ -80,14 +87,6 @@
                 sitename: 'After School Lessons',
                 showSubject: true,
                 subjects: subjects,
-                subject: {
-                    id: 123,
-                    title: "Mathematics",
-                    price: '22',
-                    location: "Fujairah",
-                    image: '../images/mathematics.jpeg',
-                    availableInventory: 5
-                },
                 cart: [],
                 order: {
                     firstname:"",
@@ -108,22 +107,42 @@
                 }
             },
             methods: {
-                addItem: function(){
-                    this.cart.push(this.subject.id);
+                addItem(subject){
+                    this.cart.push(subject.id);
                 },
                 showCheckout(){
                     this.showSubject = this.showSubject ? false : true
                 },
                 submitForm(){
                     alert("Order Submitted!")
+                },
+                canAddToCart(subject){
+                    return subject.spaces > this.cartCount(subject.id);
+                },
+                cartCount(id){
+                    let count = 0;
+                    for(let i = 0; i < this.cart.length; i++) {
+                        if (this.cart[i] === id) {
+                        count++;
+                        }
+                    }
+                    return count;
+                },
+                itemLeft(subject){
+                    return subject.spaces - this.cartCount(subject.id)
                 }
             },
             computed: {
                 cartItemCount: function(){
                     return this.cart.length || ''
             },
-                canAddToCart: function(){
-                    return this.subject.availableInventory > this.cartItemCount;
+                sortedSubjects(){
+                function compare(a, b){
+                    if(a.price > b.price) return 1;
+                    if(a.price < b.price) return -1;
+                    return 0;
+                }
+                return this.subjects.sort(compare);
             }
         }
         });
