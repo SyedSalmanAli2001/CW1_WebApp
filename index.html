@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lessons and Activities</title>
+    <title>Lessons</title>
     <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
 </head>
 <body>
     <div id="app">
-        <h1 v-text="sitename"></h1>
+        <h1 v-text="sitename" style="font-family:Trebuchet MS;"></h1>
         <button @click="showCheckout">
             {{cartItemCount}}
             Checkout
@@ -74,7 +74,7 @@
         let webstore = new Vue({
             el: '#app',
             data: {
-                sitename: 'Lessons & Activities',
+                sitename: 'After School Lessons',
                 showSubject: true,
                 subject: {
                     id: 123,
