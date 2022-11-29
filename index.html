@@ -50,7 +50,7 @@
                     Add to Cart
                     <span class="fa-solid fa-square-plus"></span>
                 </button>
-                
+
                 <span v-if="itemLeft(subject) === 0">
                     Out of Stock
                 </span>
@@ -62,6 +62,14 @@
         </div>
         <div v-else>
             <h2>Checkout</h2>
+            <div v-for="subject in cart">
+                <img width="450" height="350" v-bind:src="subject.image">
+                <h2>{{subject.title}}</h2>
+                <p>Location: {{subject.location}}</p>
+                <p>Price: AED {{subject.price}}</p>
+                <p>Spaces: {{subject.spaces }}</p>
+                <button @click="remove(subject.id)">Remove from Cart</button>
+            </div>
             <p>
                 <strong>First Name: </strong>
                 <input v-model.trim="order.firstname">
@@ -139,7 +147,8 @@
             },
             methods: {
                 addItem(subject) {
-                    this.cart.push(subject.id);
+                    this.cart.push(subject);
+                    subject.spaces--;
                 },
                 showCheckout() {
                     this.showSubject = this.showSubject ? false : true
@@ -162,7 +171,24 @@
                 itemLeft(subject) {
                     return subject.spaces - this.cartCount(subject.id)
                 },
-                
+                findSubject(id) {
+                    for (let i = 0; i < this.subject.length; i++) {
+                        if (this.subject[i].id === id) {
+                            return this.subject[i];
+                        }
+                    }
+                },
+                remove(id) {
+                    for (let i = 0; i < this.cart.length; i++) {
+                        if (this.cart[i].id === id) {
+                            this.cart.splice(i, 1);
+                            this.findSubject(id).spaces += 1;
+                        }
+                    }
+                    if (this.cart.length === 0) {
+                        this.showSubject = true
+                    }
+                }
             },
             computed: {
                 cartItemCount: function () {
