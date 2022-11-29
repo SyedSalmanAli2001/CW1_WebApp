@@ -42,10 +42,15 @@
             <div v-for="subject in sortedSubjects">
                 <br>
                 <img width="450" height="350" v-bind:src="subject.image">
-                <h2 v-text="subject.title"></h2>
+                <h2>{{subject.title}}</h2>
                 <p>Location: {{subject.location}}</p>
                 <p>Price: ${{subject.price}}</p>
-                <button v-on:click="addItem(subject)" :disabled="!canAddToCart(subject)">Add to Cart</button>
+                <p>Availabile Spaces: {{subject.spaces}}</p>
+                <button v-on:click="addItem(subject)" :disabled="!canAddToCart(subject)">
+                    Add to Cart
+                    <span class="fa-solid fa-square-plus"></span>
+                </button>
+                
                 <span v-if="itemLeft(subject) === 0">
                     Out of Stock
                 </span>
