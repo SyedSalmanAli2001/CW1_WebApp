@@ -14,6 +14,9 @@
 <body>
     <div id="app">
         <h1 v-text="sitename" style="font-family:Trebuchet MS;"></h1>
+        <input id="search" type="search" v-model="search" placeholder="Search">
+        <br>
+        <br>
         <button @click="showCheckout" :disabled="!cartItemCount > 0">
             <span class="fa-solid fa-cart-shopping"></span>
             {{cartItemCount}}
@@ -44,7 +47,7 @@
                 <img width="450" height="350" v-bind:src="subject.image">
                 <h2>{{subject.title}}</h2>
                 <p>Location: {{subject.location}}</p>
-                <p>Price: ${{subject.price}}</p>
+                <p>Price: {{subject.price}}</p>
                 <p>Availabile Spaces: {{subject.spaces}}</p>
                 <button v-on:click="addItem(subject)" :disabled="!canAddToCart(subject)">
                     Add to Cart
@@ -104,6 +107,7 @@
                 cart: [],
                 subjectOrder: "",
                 sort: "",
+                search: "",
                 order: {
                     firstname: "",
                     lastname: "",
@@ -163,6 +167,15 @@
                 sortedSubjects() {
 
                     let subjectArray = this.subject;
+                    if (this.search != "" && this.search) {
+                        let subjectArray = this.subject;
+                        subjectArray = subjectArray.filter((object) => {
+                            return (
+                                object.title.toUpperCase().includes(this.search.toUpperCase())
+                            );
+                        });
+                        return subjectArray;
+                    }
                     if (this.sort == "price") {
                         if (this.subjectOrder == "ascending") {
                             return subjectArray.sort((a, b) => a.price > b.price ? 1 : -1);
