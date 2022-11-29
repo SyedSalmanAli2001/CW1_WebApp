@@ -175,8 +175,10 @@
                         let subjectArray = this.subject;
                         subjectArray = subjectArray.filter((object) => {
                             return (
-                                object.title.toUpperCase().includes(this.search.toUpperCase())
-                            );
+                                object.title.toUpperCase().includes(this.search.toUpperCase()) || 
+                                object.location.toUpperCase().includes(this.search.toUpperCase())
+                                );
+                            
                         });
                         return subjectArray;
                     }
