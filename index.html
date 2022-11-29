@@ -87,9 +87,10 @@
             <p>First Name: {{order.firstname}}</p>
             <p>Last Name: {{order.lastname}}</p>
             <p>Phone: {{order.phone}}</p>
-            
+            <button @click="submitForm" 
+            :disabled="!(/^(?!\s*$)[a-zA-Z.+\s'-]+$/.test(this.order.firstname) && /^(?!\s*$)[a-zA-Z.+\s'-]+$/.test(this.order.lastname) && /^(?!\s*$)[0-9.+\s'-]+$/.test(this.order.phone) && this.order.phone.length === 10)">
+            Checkout</button>
 
-            <button @click="submitForm">Place Order</button>
         </div>
     </div>
     <br>
