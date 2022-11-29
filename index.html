@@ -50,7 +50,6 @@
                     Add to Cart
                     <span class="fa-solid fa-square-plus"></span>
                 </button>
-
                 <span v-if="itemLeft(subject) === 0">
                     Out of Stock
                 </span>
@@ -78,40 +77,17 @@
                 <strong>Last Name: </strong>
                 <input v-model.trim="order.lastname">
             </p>
-            <p><strong>Address: </strong>
-                <input v-model="order.address">
-            </p>
-            <p><strong>City: </strong>
-                <input v-model="order.city">
-            </p>
             <p>
-                <strong>State: </strong>
-                <select v-model="order.state">
-                    <option disabled value=""></option>
-                    <option v-for="state in states" :value="state">{{state}}</option>
-                </select>
+                <strong>Phone Number: </strong>
+                <input v-model="order.phone">
             </p>
-            <p><strong>Zip/Postal Code:</strong><input v-model="order.zip"></p>
-
-            <p><input type="checkbox" id="gift" value="true" v-model="order.gift" v-bind:true-value="order.sendGift"
-                    v-bind:false-value="order.dontSendGift">
-                <label for="gift">Ship As Gift</label>
-            </p>
-            <p>
-                <input type="radio" id="home" value="Home" v-model="order.method">
-                <label for="home">Home</label>
-                <input type="radio" id="business" value="Business" v-model="order.method">
-                <label for="business">Business</label>
-            </p>
+           
 
             <h2>Order Information</h2>
             <p>First Name: {{order.firstname}}</p>
             <p>Last Name: {{order.lastname}}</p>
-            <p>Address: {{order.address}}</p>
-            <p>City: {{order.city}}</p>
-            <p>Send as Gift: {{order.gift}}</p>
-            <p>Zip: {{order.zip}}</p>
-            <p>State: {{order.state}}</p>
+            <p>Phone: {{order.phone}}</p>
+            
 
             <button @click="submitForm">Place Order</button>
         </div>
@@ -130,20 +106,9 @@
                 order: {
                     firstname: "",
                     lastname: "",
-                    address: "",
-                    city: "",
-                    zip: "",
-                    state: "",
-                    method: "Business",
-                    sendGift: "Yes",
-                    dontSendGift: "No"
+                    phone: ""
                 },
-                states: {
-                    AL: "Alabama",
-                    AR: "Arizona",
-                    CA: "California",
-                    NV: "Nevada"
-                }
+                
             },
             methods: {
                 addItem(subject) {
