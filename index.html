@@ -1,85 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lessons</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
     <script src="lessons.js"></script>
 </head>
+
 <body>
     <div id="app">
         <h1 v-text="sitename" style="font-family:Trebuchet MS;"></h1>
-        <button @click="showCheckout">
+        <button @click="showCheckout" :disabled="!cartItemCount > 0">
+            <span class="fa-solid fa-cart-shopping"></span>
             {{cartItemCount}}
             Checkout
         </button>
         <button @click="sortAscending">Price: Low to High</button>
         <button @click="sortDescending">Price: High to Low</button>
-            <div v-if="showSubject">
-                <div v-for="subject in subjects">
-            <br>
-            <img width="450" height="350" v-bind:src="subject.image">
-            <h2 v-text="subject.title"></h2>
-            <p>Location: {{subject.location}}</p>
-            <p>Price: ${{subject.price}}</p>
-            <button v-on:click="addItem(subject)" :disabled="!canAddToCart(subject)">Add to Cart</button>
-            <span v-if="itemLeft(subject) === 0">
-                Out of Stock
-            </span>
-            <span v-else-if="itemLeft(subject) < 3">
-                Only {{itemLeft(subject)}} left!
-            </span>
-            <span v-else>Buy Now!</span>
-                </div>
+        <div v-if="showSubject">
+            <div v-for="subject in subjects">
+                <br>
+                <img width="450" height="350" v-bind:src="subject.image">
+                <h2 v-text="subject.title"></h2>
+                <p>Location: {{subject.location}}</p>
+                <p>Price: ${{subject.price}}</p>
+                <button v-on:click="addItem(subject)" :disabled="!canAddToCart(subject)">Add to Cart</button>
+                <span v-if="itemLeft(subject) === 0">
+                    Out of Stock
+                </span>
+                <span v-else-if="itemLeft(subject) < 3">
+                    Only {{itemLeft(subject)}} left!
+                </span>
+                <span v-else>Buy Now!</span>
             </div>
-            <div v-else>
-                <h2>Checkout</h2>
-                <p>
-                    <strong>First Name: </strong>
-                    <input v-model.trim="order.firstname">
-                </p>
-                <p>
-                    <strong>Last Name: </strong>
-                    <input v-model.trim="order.lastname">
-                </p>
-                <p><strong>Address: </strong>
-                    <input v-model="order.address">
-                </p>
-                <p><strong>City: </strong>
-                    <input v-model="order.city">
-                </p>
-                <p>
-                    <strong>State: </strong>
-                    <select v-model="order.state">
-                        <option disabled value=""></option>
-                        <option v-for="state in states" :value="state">{{state}}</option>
-                    </select>
-                </p>
-                <p><strong>Zip/Postal Code:</strong><input v-model="order.zip"></p>
+        </div>
+        <div v-else>
+            <h2>Checkout</h2>
+            <p>
+                <strong>First Name: </strong>
+                <input v-model.trim="order.firstname">
+            </p>
+            <p>
+                <strong>Last Name: </strong>
+                <input v-model.trim="order.lastname">
+            </p>
+            <p><strong>Address: </strong>
+                <input v-model="order.address">
+            </p>
+            <p><strong>City: </strong>
+                <input v-model="order.city">
+            </p>
+            <p>
+                <strong>State: </strong>
+                <select v-model="order.state">
+                    <option disabled value=""></option>
+                    <option v-for="state in states" :value="state">{{state}}</option>
+                </select>
+            </p>
+            <p><strong>Zip/Postal Code:</strong><input v-model="order.zip"></p>
 
-                <p><input type="checkbox" id="gift" value="true" v-model="order.gift" v-bind:true-value="order.sendGift" v-bind:false-value="order.dontSendGift">
-                    <label for="gift">Ship As Gift</label>
-                </p>
-                <p>
-                    <input type="radio" id="home" value="Home" v-model="order.method">
-                    <label for="home">Home</label>
-                    <input type="radio" id="business" value="Business" v-model="order.method">
-                    <label for="business">Business</label>
-                </p>
-                    
-                <h2>Order Information</h2>
-                <p>First Name: {{order.firstname}}</p>
-                <p>Last Name: {{order.lastname}}</p>
-                <p>Address: {{order.address}}</p>
-                <p>City: {{order.city}}</p>
-                <p>Send as Gift: {{order.gift}}</p>
-                <p>Zip: {{order.zip}}</p>
-                <p>State: {{order.state}}</p>
+            <p><input type="checkbox" id="gift" value="true" v-model="order.gift" v-bind:true-value="order.sendGift"
+                    v-bind:false-value="order.dontSendGift">
+                <label for="gift">Ship As Gift</label>
+            </p>
+            <p>
+                <input type="radio" id="home" value="Home" v-model="order.method">
+                <label for="home">Home</label>
+                <input type="radio" id="business" value="Business" v-model="order.method">
+                <label for="business">Business</label>
+            </p>
 
-                <button @click="submitForm">Place Order</button>
-            </div>
+            <h2>Order Information</h2>
+            <p>First Name: {{order.firstname}}</p>
+            <p>Last Name: {{order.lastname}}</p>
+            <p>Address: {{order.address}}</p>
+            <p>City: {{order.city}}</p>
+            <p>Send as Gift: {{order.gift}}</p>
+            <p>Zip: {{order.zip}}</p>
+            <p>State: {{order.state}}</p>
+
+            <button @click="submitForm">Place Order</button>
+        </div>
     </div>
     <br>
     <script>
@@ -91,15 +96,15 @@
                 subjects: subjects,
                 cart: [],
                 order: {
-                    firstname:"",
-                    lastname:"",
-                    address:"",
-                    city:"",
-                    zip:"",
-                    state:"",
-                    method:"Business",
-                    sendGift:"Yes",
-                    dontSendGift:"No"
+                    firstname: "",
+                    lastname: "",
+                    address: "",
+                    city: "",
+                    zip: "",
+                    state: "",
+                    method: "Business",
+                    sendGift: "Yes",
+                    dontSendGift: "No"
                 },
                 states: {
                     AL: "Alabama",
@@ -109,44 +114,45 @@
                 }
             },
             methods: {
-                addItem(subject){
+                addItem(subject) {
                     this.cart.push(subject.id);
                 },
-                showCheckout(){
+                showCheckout() {
                     this.showSubject = this.showSubject ? false : true
                 },
-                submitForm(){
+                submitForm() {
                     alert("Order Submitted!")
                 },
-                canAddToCart(subject){
+                canAddToCart(subject) {
                     return subject.spaces > this.cartCount(subject.id);
                 },
-                cartCount(id){
+                cartCount(id) {
                     let count = 0;
-                    for(let i = 0; i < this.cart.length; i++) {
+                    for (let i = 0; i < this.cart.length; i++) {
                         if (this.cart[i] === id) {
-                        count++;
+                            count++;
                         }
                     }
                     return count;
                 },
-                itemLeft(subject){
+                itemLeft(subject) {
                     return subject.spaces - this.cartCount(subject.id)
                 },
-                sortAscending(){
-                this.subjects.sort((a, b) => a.price > b.price ? 1 : -1);
+                sortAscending() {
+                    this.subjects.sort((a, b) => a.price > b.price ? 1 : -1);
                 },
-                sortDescending(){
-                this.subjects.sort((a, b) => a.price < b.price ? 1 : -1);
-            }
+                sortDescending() {
+                    this.subjects.sort((a, b) => a.price < b.price ? 1 : -1);
+                }
             },
             computed: {
-                cartItemCount: function(){
+                cartItemCount: function () {
                     return this.cart.length || ''
-            },
-        
-        }
+                },
+
+            }
         });
     </script>
 </body>
+
 </html>
