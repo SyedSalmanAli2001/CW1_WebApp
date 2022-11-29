@@ -54,7 +54,7 @@
                     <span class="fa-solid fa-square-plus"></span>
                 </button>
                 <span v-if="itemLeft(subject) === 0">
-                    Out of Stock
+                    All Out
                 </span>
                 <span v-else-if="itemLeft(subject) < 3">
                     Only {{itemLeft(subject)}} left!
@@ -157,11 +157,15 @@
                     }
                     if (this.cart.length === 0) {
                         this.showSubject = true
+                        this.order.firstname = "";
+                        this.order.lastname = "";
+                        this.order.phone = "";
+
                     }
                 }
             },
             computed: {
-                cartItemCount: function () {
+                cartItemCount() {
                     return this.cart.length || ''
                 },
                 sortedSubjects() {
